@@ -1,7 +1,4 @@
 ﻿
-#Import-Module Kell hozzá, hogy Get-Help-el elérhető legyen
-#Hasznos a -force kapcoló ha frissítettük, hogy betöltse a változtatásokat is.
-#VsCode esetén a helyes ékezetek megjelenítéséhez UTF-8 BOM a helyes beállítás
 
    
 
@@ -18,13 +15,13 @@ Felhasználók csoportos létrehozása, ill. törlése CSV fájlból
 Felhasználók csoportos létrehozása, ill. törlése egy külső (users.csv) fájlból vett adatok alapján, Csoport elnevézs hozzáfúzése a Description értékhez
 
 .NOTES
--Paraméter megadása nélkül is kétrehozásra kerülnek a felhasználk, ez esetben jelszó nélkül
--Import-Module Kell hozzá, hogy Get-Help-el elérhető legyen
+-Import-Module Kell hozzá, hogy elérhető legyen
 -Hasznos a -force kapcoló ha frissítettük, hogy betöltse a változtatásokat is.
+
+-Paraméter megadása nélkül is kétrehozásra kerülnek a felhasználk, ez esetben jelszó nélkül
+
 -VsCode esetén a helyes ékezetek megjelenítéséhez UTF-8 BOM a helyes beállítás
 -Segítség a jelszó kipróbáláshoz ha a pw kapcsolót is használjuk. PL. CMD -> runas /user:minta1 regedit
-
-
 
 
 .PARAMETER pw
@@ -119,7 +116,7 @@ PROCESS {
                     }
                 }
                 
-                 #Organization hozzáfűzése
+                #Organization hozzáfűzése
 
                 #Saját verzió
 
@@ -159,8 +156,6 @@ PROCESS {
 
 END { 
    
-
-
 }
 
 }
