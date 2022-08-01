@@ -42,6 +42,7 @@ PROCESS {
                 $FullNames = $_.FullName
                 $Descriptions = $_.Description
                 $Names = $_.Name
+                $Groups = $_.Group
 
                 #A jelszó paraméter működéséhez szükséges a sima string konvertálása
                 $Passwords = $_.Password
@@ -79,11 +80,47 @@ PROCESS {
                     }
                 }
                 
-       }
+                 #Organization hozzáfűzés, ha van kihez, ill nem üres a csv alapján
+
+                #Saját verzió
+
+                #$Description_update = $Groups + " " + $Descriptions;
+                #Write-Host $Description_update
+                #Set-LocalUser -Name $Names -Description $Description_update
+                
+                #Switch verzió
+
+                $DescriptionUpdate = $Groups
+
+                Switch($DescriptionUpdate) {
+                    "FO" {
+                        $DescriptionUpdate ="Front Office"
+                    }
+                    "BO" {
+                        $DescriptionUpdate ="Back Office"
+                    }
+                    "GY" {
+                        $DescriptionUpdate ="Gyártás"
+                    }
+                    "GOD" {
+                        $DescriptionUpdate ="... Bryan ..."
+                    }
+                }
+               
+                $Descriptions = $DescriptionUpdate + " " + $Descriptions;
+                Set-LocalUser -Name $Names -Description $Descriptions
+            
+            }
         
-}     
+    
+
+        }    
+        
+
 
 END { 
+   
+
 
 }
 
