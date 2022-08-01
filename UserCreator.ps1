@@ -1,5 +1,5 @@
-#Import-Module Kell hozz√°, hogy Get-Help-el el√©rhet≈ë legyen
-#Hasznos a -force kapcol√≥ ha friss√≠tett√ºk, hogy bet√∂ltse a v√°ltoztat√°sokat is.
+#Import-Module Kell hozz·, hogy Get-Help-el elÈrhet? legyen
+#Hasznos a -force kapcolÛ ha frissÌtett¸k, hogy betˆltse a v·ltoztat·sokat is.
 Function CreateUsersFromCsv {
 	
 
@@ -31,8 +31,9 @@ PROCESS {
                     
                     if ($FullNames -eq "") {
                         
-                        #Ha nincs teljes n√©v, kieg√©sz√≠t√©s
+                        #Ha nincs teljes nÈv, kiegÈszÌtÈs
                         $Fullnames = "Automat: $Names"
+                        $Descriptions = "Hi·nyos adat"
                     }
 
                 New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -NoPassword
