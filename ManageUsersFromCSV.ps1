@@ -16,14 +16,14 @@ Helyi felhasználók csoportos létrehozása, ill. törlése egy külső (users.
 -Paraméter megadása nélkül is létrehozásra kerülnek a felhasználók, ez esetben jelszó nélkül
 
 -VsCode esetén a helyes ékezetek megjelenítéséhez UTF-8 BOM a helyes beállítás
--Segítség a jelszó kipróbáláshoz ha a pw kapcsolót is használjuk. PL. CMD -> runas /user:minta1 regedit
+-Segítség a jelszó kipróbáláshoz ha a pw kapcssolót is használjuk. PL. CMD -> runas /user:minta1 regedit
 
 
 .PARAMETER pw csv
 - Értéke lehet a csv  -> Helyi felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
 
 .PARAMETER pw prompt
-- Értéke lehet a prompt  -> Helyi felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
+- Értéke lehet a prompt  -> Helyi felhasználók létrehozása a users.csv fájl alapján, jelszó manuális bevitelével <- 
 
 .PARAMETER NeverExpire
 - Értéke lehet a NeverExpire  -> A jelszó nem jár le <- 
