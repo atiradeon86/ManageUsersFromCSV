@@ -1,18 +1,12 @@
-﻿
-
-   
-
-
-    
-Function ManageUsersFromCsv {
+﻿Function ManageUsersFromCsv {
 
 <#
 
 .DESCRIPTION
-Felhasználók csoportos létrehozása, ill. törlése CSV fájlból
+Helyi felhasználók csoportos létrehozása, ill. törlése CSV fájlból
 
 .SYNOPSIS
-Felhasználók csoportos létrehozása, ill. törlése egy külső (users.csv) fájlból vett adatok alapján, Csoport elnevézs hozzáfúzése a Description értékhez
+Helyi felhasználók csoportos létrehozása, ill. törlése egy külső (users.csv) fájlból vett adatok alapján, Csoport elnevézs hozzáfúzése a Description értékhez
 
 .NOTES
 -Import-Module Kell hozzá, hogy elérhető legyen (Import-Module -force .\ManageUsersFromCSV.ps1)
@@ -25,26 +19,26 @@ Felhasználók csoportos létrehozása, ill. törlése egy külső (users.csv) f
 
 
 .PARAMETER pw
-- Értéke lehet a csv  -> Felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
+- Értéke lehet a csv  -> Helyi felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
 
 .PARAMETER prompt
-- Értéke lehet a prompt  -> Felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
+- Értéke lehet a prompt  -> Helyi felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
 
 .PARAMETER cmd
-- Értéke lehet a del -> Felhasználók törlése a users.csv fájl alapján  -<
+- Értéke lehet a del -> Helyi felhasználók törlése a users.csv fájl alapján  -<
 
 
 .EXAMPLE
- ManageUsersFromCSV -> Felhasználók létrehozása a  users.csv fájlból jelszó nélkül <- 
+ ManageUsersFromCSV -> Helyi felhasználók létrehozása a  users.csv fájlból jelszó nélkül <- 
 
  .EXAMPLE
- ManageUsersFromCSV -pw csv -> Felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
+ ManageUsersFromCSV -pw csv -> Helyi felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
 
  .EXAMPLE
- ManageUsersFromCSV -pw prompt -> Felhasználók létrehozás a users.csv fájl adatai alapján jelszó bekérésével <- 
+ ManageUsersFromCSV -pw prompt -> Helyi felhasználók létrehozás a users.csv fájl adatai alapján jelszó bekérésével <- 
 
  .EXAMPLE
- ManageUsersFromCSV -cmd del -> Felhasználók törlése a users.csv fájl alapján <- 
+ ManageUsersFromCSV -cmd del -> Helyi felhasználók törlése a users.csv fájl alapján <- 
 
 #>
 	
@@ -84,10 +78,15 @@ PROCESS {
                 $Passwords = $_.Password
                 $SecurePasswords  = ConvertTo-SecureString -String $Passwords -AsPlainText -Force
 
+                ## Ha törölni akarunk
                 if ($cmd -eq "del") {
                     Remove-LocalUser -Name $Names
                     Write-Host "Törölt felhasználó: $Names"
-                } else {
+                } 
+                
+                #Egyébként
+                else {
+
                     #Ha a felhasználónév nem üres
                     if ($Names -ne "") {
                         
@@ -102,6 +101,7 @@ PROCESS {
                         if ($pw -eq "csv") {  
                             New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -Password $SecurePasswords
                         } 
+
                         #Ha bekérjük a felhasználók adatait
                         elseif ($pw -eq "prompt") {
                             #Jelszó Bekérése
@@ -109,8 +109,9 @@ PROCESS {
                             $SecurePassword = Read-Host -AsSecureString
                             New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames  -Password $SecurePassword
 
-                        }  else {
-                            #Ha nem adunk meg beállítást, alapból jelszó nélkül hozzuk létre
+                        }  
+                         #Ha nem adunk meg beállítást, alapból jelszó nélkül hozzuk létre
+                        else {
                             New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -NoPassword
                         }
                     }
