@@ -11,7 +11,7 @@ Helyi felhasználók csoportos létrehozása, ill. törlése egy külső (users.
 .NOTES
 -Import-Module Kell hozzá, hogy elérhető legyen (Import-Module -force .\ManageUsersFromCSV.ps1)
 -Users.csv fájl szükséges
--Hasznos a -force kapcoló ha frissítettük, hogy betöltse a változtatásokat is.
+-Hasznos a -force kapcsoló ha frissítettük, hogy betöltse a változtatásokat is.
 
 -Paraméter megadása nélkül is létrehozásra kerülnek a felhasználók, ez esetben jelszó nélkül
 
