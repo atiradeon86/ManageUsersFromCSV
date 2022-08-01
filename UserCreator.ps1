@@ -25,11 +25,19 @@ PROCESS {
                 $FullNames = $_.FullName
                 $Descriptions = $_.Description
                 $Names = $_.Name
+
                 if ($Names -ne "") {
-                    New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -NoPassword
                     #Write-Host $Fullnames
-                
+                    
+                    if ($FullNames -eq "") {
+                        
+                        #Ha nincs teljes név, kiegészítés
+                        $Fullnames = "Automat: $Names"
+                    }
+
+                New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -NoPassword
                 }
+                
                 #Remove Command
                 #Remove-LocalUser -Name $Names
 
