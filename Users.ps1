@@ -1,17 +1,30 @@
-﻿#Import-Module Kell hozzá, hogy Get-Help-el elérhető legyen
+﻿
+#Import-Module Kell hozzá, hogy Get-Help-el elérhető legyen
 #Hasznos a -force kapcoló ha frissítettük, hogy betöltse a változtatásokat is.
 #VsCode esetén a helyes ékezetek megjelenítéséhez UTF-8 BOM a helyes beállítás
 
     #Csv Import példa     
     #$data = Import-Csv $csvFile
 
-    #Létrehozás alapból jelszó nélkül: CreateUsersFromCSV
-    #Létrehozás CSV fájlban lévő jelszavakkal: CreateUsersFromCSV -pw csv
-    #Létrehozás jelszó bekérésével: CreateUsersFromCSV -pw prompt
-    #A csv fájl alapján a felhasználók törlése: CreateUsersFromCSV -cmd del
 
     #Segítség a jelszó kipróbáláshoz ha a pw kapcsolót is használjuk. PL. CMD -> runas /user:minta1 regedit
 Function CreateUsersFromCsv {
+
+<#
+
+.EXAMPLE
+ CreateUsersFromCSV -> Felhasználók létrehozása a  users.csv fájlból jelszó nélkül <- 
+
+ .EXAMPLE
+ CreateUsersFromCSV -pw csv -> Felhasználók létrehozása a users.csv fájlban lévő jelszavakkal <- 
+
+ .EXAMPLE
+ CreateUsersFromCSV -pw prompt -> Felhasználók létrehozás a users.csv féjl adatai alapján jelszó bekérésével <- 
+
+ .EXAMPLE
+ CreateUsersFromCSV -cmd del -> Felhasználók törlése a users.csv fájl alapján <- 
+
+#>
 	
 
 [CmdletBinding()]
@@ -126,3 +139,4 @@ END {
 }
 
 }
+
