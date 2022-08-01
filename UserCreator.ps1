@@ -10,6 +10,7 @@
     #Létrehozás jelszó bekérésével: CreateUsersFromCSV -pw prompt
     #A csv fájl alapján a felhasználók törlése: CreateUsersFromCSV -cmd del
 
+    #Segítség a jelszó kipróbáláshoz ha a pw kapcsolót is használjuk. PL. CMD -> runas /user:minta1 regedit
 Function CreateUsersFromCsv {
 	
 
