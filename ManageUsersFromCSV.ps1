@@ -6,7 +6,7 @@
 Helyi felhasználók csoportos létrehozása, ill. törlése CSV fájlból
 
 .SYNOPSIS
-Helyi felhasználók csoportos létrehozása, ill. törlése egy külső (users.csv) fájlból vett adatok alapján, Csoport elnevézs hozzáfúzése a Description értékhez
+Helyi felhasználók csoportos létrehozása, ill. törlése egy külső (users.csv) fájlból vett adatok alapján, Csoport elnevezés hozzáfúzése a Description értékhez
 
 .NOTES
 -Import-Module Kell hozzá, hogy elérhető legyen (Import-Module -force .\ManageUsersFromCSV.ps1)
