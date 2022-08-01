@@ -15,7 +15,7 @@ Felhasználók csoportos létrehozása, ill. törlése CSV fájlból
 Felhasználók csoportos létrehozása, ill. törlése egy külső (users.csv) fájlból vett adatok alapján, Csoport elnevézs hozzáfúzése a Description értékhez
 
 .NOTES
--Import-Module Kell hozzá, hogy elérhető legyen
+-Import-Module Kell hozzá, hogy elérhető legyen (Import-Module -force .\ManageUsersFromCSV.ps1)
 -Hasznos a -force kapcoló ha frissítettük, hogy betöltse a változtatásokat is.
 
 -Paraméter megadása nélkül is kétrehozásra kerülnek a felhasználk, ez esetben jelszó nélkül
