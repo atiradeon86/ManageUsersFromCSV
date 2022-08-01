@@ -10,9 +10,10 @@ Helyi felhasználók csoportos létrehozása, ill. törlése egy külső (users.
 
 .NOTES
 -Import-Module Kell hozzá, hogy elérhető legyen (Import-Module -force .\ManageUsersFromCSV.ps1)
+-Users.scv fájl szükséges
 -Hasznos a -force kapcoló ha frissítettük, hogy betöltse a változtatásokat is.
 
--Paraméter megadása nélkül is kétrehozásra kerülnek a felhasználk, ez esetben jelszó nélkül
+-Paraméter megadása nélkül is létrehozásra kerülnek a felhasználók, ez esetben jelszó nélkül
 
 -VsCode esetén a helyes ékezetek megjelenítéséhez UTF-8 BOM a helyes beállítás
 -Segítség a jelszó kipróbáláshoz ha a pw kapcsolót is használjuk. PL. CMD -> runas /user:minta1 regedit
@@ -83,7 +84,7 @@ PROCESS {
                     Remove-LocalUser -Name $Names
                     Write-Host "Törölt felhasználó: $Names"
                 } 
-                
+
                 #Egyébként
                 else {
 
