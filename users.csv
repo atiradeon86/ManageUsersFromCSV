@@ -1,4 +1,4 @@
-"Name","FullName","Description","Password","Group"
+"Name","FullName","Description","Password","ObjectClass"
 "minta1","Teszt Admin","Teszt","1234","BO"
 "minta2","Teszt User","Próba","5678","GY"
 "minta3","Teszt Elek","CSV demo","910","FO"
