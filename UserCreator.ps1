@@ -80,7 +80,7 @@ PROCESS {
                     }
                 }
                 
-                 #Organization hozzáfűzés, ha van kihez, ill nem üres a csv alapján
+                 #Organization hozzáfűzése
 
                 #Saját verzió
 
