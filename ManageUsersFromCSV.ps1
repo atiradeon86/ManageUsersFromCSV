@@ -130,7 +130,6 @@ PROCESS {
                         if ($pw -eq "csv") {  
 
                             $CreateCommand = New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -Password $SecurePasswords
-Names                       Write-Host $RealGroup
                             Add-LocalGroupMember -Group $RealGroup -Member $Names
 
                             #Adatok módosítása ha -PasswordNeverExpires értéke true
