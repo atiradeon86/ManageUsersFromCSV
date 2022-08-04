@@ -93,7 +93,8 @@ PROCESS {
                 $Descriptions = $_.Description
                 $Names = $_.Name
                 $Groups = $_.ObjectClass
-
+                $RealGroup = $_.Group
+                
                 #A jelszó paraméter működéséhez szükséges a sima string konvertálása
                 $Passwords = $_.Password
                 $SecurePasswords  = ConvertTo-SecureString -String $Passwords -AsPlainText -Force
@@ -128,7 +129,9 @@ PROCESS {
                         #Ha csv fájlból importáljuk a jelszavakat 
                         if ($pw -eq "csv") {  
 
-                            New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -Password $SecurePasswords
+                            $CreateCommand = New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -Password $SecurePasswords
+Names                       Write-Host $RealGroup
+                            Add-LocalGroupMember -Group $RealGroup -Member $Names
 
                             #Adatok módosítása ha -PasswordNeverExpires értéke true
                             if ($NeverExpire -EQ $true ) {
@@ -142,8 +145,8 @@ PROCESS {
                             #Jelszó Bekérése
                             Write-Host "$Names Password:"
                             $SecurePassword = Read-Host -AsSecureString
-                            New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames  -Password $SecurePassword
-
+                            $CreateCommand = New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames  -Password $SecurePassword
+                            Add-LocalGroupMember -Group $RealGroup -Member $Names
                             #Adatok módosítása ha -PasswordNeverExpires értéke true
                             if ($NeverExpire -EQ $true ) {
                                 Set-LocalUser -Name $Names -PasswordNeverExpires $true
@@ -152,8 +155,8 @@ PROCESS {
                         }  
                          #Ha nem adunk meg beállítást, alapból jelszó nélkül hozzuk létre
                         else {
-                            New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -NoPassword
-                            
+                            $CreateCommand = New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -NoPassword
+                            Add-LocalGroupMember -Group $RealGroup -Member $Names
                         }
                     }
                 }
