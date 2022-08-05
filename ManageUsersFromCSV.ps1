@@ -1,9 +1,8 @@
-﻿Function ManageUsersFromCsv {
-    
+﻿Function ManageUsersFromCsv {    
 <#
 
 .DESCRIPTION
-Helyi felhasználók csoportos létrehozása, ill. törlése CSV fájlból
+Helyi felhasználók csoportos létrehozása, ill. törlése CSV fájlból, helyi csoport kezeléssel 
 
 .SYNOPSIS
 Helyi felhasználók csoportos létrehozása, ill. törlése egy külső (users.csv) fájlból vett adatok alapján, Csoport elnevezés hozzáfúzése a Description értékhez
@@ -34,6 +33,8 @@ Helyi felhasználók csoportos létrehozása, ill. törlése egy külső (users.
 .PARAMETER cmd CreateDemoCsv
 - Létrehoz egy Demo.csv fájlt az aktuális adatok alapján
 
+.NOTES
+- A működéshez Administrator jogosultsággal rendelkező Shell szükséges!
 .EXAMPLE
  ManageUsersFromCSV -cmd CreateDemoCsv -> Létrehoz az aktuiális adatok alapján egy Demo.csv fájlt. Értelme igazából nem sok, mert nyilván a meglévőt nem akarjuk importálni, az élesben használtat pedig nem fogjuk törölni <- 
 
@@ -94,7 +95,23 @@ PROCESS {
                 $Names = $_.Name
                 $Groups = $_.ObjectClass
                 $RealGroup = $_.Group
+
                 
+                #Csoport létezésének ellenőrzése, létrehozása szükség esetén
+                Function CheckGroup {
+                    $Check = Get-LocalGroup $RealGroup
+                    if ($Check.Name -ne "") {New-LocalGroup -Name $RealGroup} 
+                }
+
+                #Csoport eltávolítása, az alapvető működés fenntartásához szükséges csoportok kizárásával
+                Function RemoveGroup {
+                    if (($RealGroup -eq "Administrators" -or $RealGroup -eq "Users"))  {$IsCommonorAdminGroup = $true} else {$IsCommonorAdminGroup = $false} 
+                    if (-not $IsCommonorAdminGroup) {
+                        Write-Host "Törölt csoportok: $RealGroup`n" -ForegroundColor Blue -NoNewline
+                        Remove-LocalGroup -Name $RealGroup
+                    }
+                }
+
                 #A jelszó paraméter működéséhez szükséges a sima string konvertálása
                 $Passwords = $_.Password
                 $SecurePasswords  = ConvertTo-SecureString -String $Passwords -AsPlainText -Force
@@ -103,6 +120,10 @@ PROCESS {
                 if ($cmd -eq "del") {
                     Remove-LocalUser -Name $Names
                     Write-Host "Törölt felhasználó: $Names"
+                
+                    #Csoport törlése, ha nem általános, ill a rendszer működéséhez szükséges
+                    RemoveGroup
+                   
                 } 
 
                 elseif ($cmd -eq "CreateDemoCsv") {
@@ -130,6 +151,8 @@ PROCESS {
                         if ($pw -eq "csv") {  
 
                             $CreateCommand = New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -Password $SecurePasswords
+
+                            CheckGroup
                             Add-LocalGroupMember -Group $RealGroup -Member $Names
 
                             #Adatok módosítása ha -PasswordNeverExpires értéke true
@@ -145,6 +168,9 @@ PROCESS {
                             Write-Host "$Names Password:"
                             $SecurePassword = Read-Host -AsSecureString
                             $CreateCommand = New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames  -Password $SecurePassword
+                            #Csoport létezésének ellenőrzése, létrehozása szükség esetén
+                            CheckGroup
+                            #Hozzáadjuk a csoporthoz az új felhasználót 
                             Add-LocalGroupMember -Group $RealGroup -Member $Names
                             #Adatok módosítása ha -PasswordNeverExpires értéke true
                             if ($NeverExpire -EQ $true ) {
@@ -155,6 +181,7 @@ PROCESS {
                          #Ha nem adunk meg beállítást, alapból jelszó nélkül hozzuk létre
                         else {
                             $CreateCommand = New-LocalUser -Name $Names -Description $Descriptions -FullName $Fullnames -NoPassword
+                            CheckGroup
                             Add-LocalGroupMember -Group $RealGroup -Member $Names
                         }
                     }
@@ -201,7 +228,10 @@ PROCESS {
 
 
 END { 
-    #Get-LocalUser | példák | html kimenet demo
+    Write-Host "`n"
+    Write-Host "#----------------------------------------------------------[Lekérdezés példák]----------------------------------------------------------"  -ForegroundColor Blue -NoNewline; 
+
+    Get-LocalUser | példák | html kimenet demo
 
     Get-LocalUser | Where-Object -Property Enabled -NE $false | Select-Object Name,Sid,Enabled
 
@@ -216,6 +246,7 @@ END {
     Get-LocalUser | Where-Object -Property Description -like '*hiányos*' | Select-Object name,enabled | Sort-Object -Property Name -Descending |FL
 
     Get-LocalUser | Where-Object -Property Description -like '*Front*' | Select-Object name,enabled,sid ,Description | Sort-Object -Property Description |  ConvertTo-Html | Out-File -FilePath Front-Office.html           
+
 }
 
 }
